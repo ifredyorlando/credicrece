@@ -1,0 +1,32 @@
+.guia-separator {
+    width: 1px !important;
+    height: 90% !important;
+    background-color: #c5bfbf;
+}
+
+.tabla-embalaje {
+    height: 300px !important;
+}
+
+.blocker {
+    z-index: 4 !important;
+}
+
+#searchClienteModal, .styled-modal {
+    max-width: 800px !important;
+    max-height: 700px !important;
+}
+
+.cliente-button {}
+
+.search-nombre-field {
+    width: 90%;
+}
+
+.search-modal-button {
+    width: 10%;
+}
+
+.modal a.close-modal {
+    z-index: 7 !important;
+}

@@ -1,0 +1,91 @@
+{%extends 'base_main.html'%}
+{%load static%}
+{% block css %}
+<link rel="stylesheet" href="{% static 'datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'sweetalert2/dist/sweetalert2.min.css' %}">
+<link rel="stylesheet" href="{% static 'toastr/build/toastr.min.css' %}">
+{% endblock %}
+
+{% block buscador %}
+    {% include 'snippets/buscador.html' %}
+{% endblock %}
+
+{% block buscador-responsivo %}
+    {% include 'snippets/buscador-responsivo.html' %}
+{% endblock %}
+
+{% block contenido %}
+    <br>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-users mr-1"></i>
+            Clientes
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="data-table" width="100%" cellspacing="0"></table>
+            </div>
+        </div>
+    </div>
+    {% include 'snippets/modal_base.html' %}
+{% endblock %}
+{% block javascript %}
+    <script type="application/javascript" src="{% static 'sweetalert2/dist/sweetalert2.all.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'toastr/build/toastr.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/tableRequest/defaultTableRequest.js' %}"></script>
+    <script type="application/javascript">
+        // Function reload table list user
+        $(document).ready(() => {
+            loadTableUsers($('#data-table'));
+        })
+        // function users
+        function loadTableUsers(table){
+            let $table = table;
+            const url = "{% url 'guias:deleted-clientes-json' %}"
+            const lenguaje_url = "{% static 'js/lenguaje/lenguaje_es.json' %}";
+            const columns = [
+                {
+                    data: '1',
+                    title: 'Nombre de Cliente'
+                },
+                {
+                    data: '2',
+                    title: 'Apellido',
+                    filterable: false,
+                    searchable: false,
+                    sortable: false
+                },
+                {
+                    data: '3',
+                    title: 'Correo Electronico',
+                    filterable: false,
+                    searchable: false,
+                    sortable: false
+                },
+                {
+                    data: '4',
+                    title: 'Empresa'
+                },
+                {
+                    data: '0',
+                    title: 'Acciones',
+                    filterable: false,
+                    searchable: false,
+                    sortable: false,
+                    width: '25%',
+                    render: ((data, type, row, meta) => {
+                        const activateUrl = "{% url 'guias:activar-clientes' 0 %}".replace(0, row[0]);
+                        const activateButton = `<button href='#' class='btn btn-info btn-sm' title='Activar' onclick="activarData(\'${activateUrl}\')"><i class="fas fa-redo"></i></button></div>`
+                        return activateButton;
+                    })
+                }
+            ];
+            $table.DataTable(postDefaultTableRequest(url, lenguaje_url, columns))
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times</span>
+    </button>
+</div>
+<div class="modal-body">
+    <h4 class="text-center">Informacion de la guia</h4>
+    <hr>
+    <div class="row">
+        {% if view.num %}
+        <div class="col-12 bg-info text-white text-center">
+            Número de guía
+        </div>
+        <div class="col-12 text-center">
+            {{view.num}}
+        </div>
+        <div class="col-12 bg-info text-white text-center">
+            Estado
+        </div>
+        <div class="col-12 text-center">
+            {{view.state}}
+        </div>
+        {% else %}
+        <div class="col-12 bg-info text-white text-center">
+            Sin Resultados
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+<div class="modal-footer text-center">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        <em class="fa fa-times"> Cerrar</em>
+    </button>
+</div>

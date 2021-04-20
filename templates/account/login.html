@@ -1,0 +1,53 @@
+{% extends 'base_account.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load account socialaccount %}
+
+{% block titulo %}Login{% endblock titulo %}
+
+{% block contenido %}
+<div class="limiter">
+	<div class="container-login100">
+		<div class="wrap-login100">
+			<div class="login100-form-title bg-primary" >
+				<span class="login100-form-title-1">Credi Crece</span>
+			</div>
+			{% if messages %}
+				{% for message in messages%}
+					<div class="alert {{ message.tags }} alert-dismissible fade show W-100" role="alert">
+						{{ message }}
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				{% endfor %}
+			{% endif%}
+			<form class="login100-form validate-form" autocomplete="off" method="post" style="padding-left=120px"
+				  action="{% url 'home:login' %}" novalidate>
+				{% csrf_token %}
+				{% include 'snippets/non_error_forms.html' %}
+				<div class="form-group" style="width: 100%;">
+					{{ form.login|as_crispy_field }}
+				</div>
+				<div class="form-group" style="width: 100%;">
+					{{ form.password|as_crispy_field }}
+				</div>
+				{% if redirect_field_value %}
+					<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+				{% endif %}
+				<div class="flex-sb-m w-full p-b-30">
+					<div>
+						<a href="#" class="txt1 text-info">Olvidaste tu contraseña?</a>
+					</div>
+				</div>
+				<div class="row" style="width: 100%; margin: 0; padding: 0; ">
+                    <div class="col-md-6 mt-1 m-auto" style="padding: 0 5px;">
+					    <button class="btn btn-success btn-block" type="submit">
+                            <i class="fas fa-user"></i> Inicial Sesión</button>
+				    </div>
+                </div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock contenido %}

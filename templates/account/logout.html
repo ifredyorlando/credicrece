@@ -1,0 +1,41 @@
+{% extends 'base_account.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load account %}
+
+{% block titulo %}Cerrar Sesion{% endblock titulo %}
+
+{% block contenido %}
+<div class="limiter">
+	<div class="container-login100">
+		<div class="wrap-login100">
+			<div class="login100-form-title bg-primary">
+				<span class="login100-form-title-1">Credi Crece</span>
+			</div>
+			<form class="login100-form validate-form" autocomplete="off" method="post"
+				  action="{% url 'account_logout' %}" novalidate>
+				{% csrf_token %}
+                <div class="w-100">
+                    <h4 class="text-center w-100" >Cerrar Sesión</h4>
+                    <p class="text-center small w-100">¿Estas seguro de cerrar sesión y salir de la aplicación?</p>
+                    <br/>
+                </div>
+				{% if redirect_field_value %}
+					<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+				{% endif %}
+                <div class="row" style="width: 100%; margin: 0; padding: 0; ">
+                    <div class="col-md-6 mt-1" style="padding: 0 5px;">
+					    <button class="btn btn-danger btn-block" type="submit">
+							<i class="fas fa-exclamation-circle"></i> Cerrar Sesión</button>
+				    </div>
+                    <div class="col-md-6 mt-1" style="padding: 0 5px;">
+                        <a class="btn btn-info btn-block" href="{% url 'account_login' %}">
+                            <i class="fas fa-arrow-left"></i> Regresar
+                        </a>
+                    </div>
+                </div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock contenido %}

@@ -1,0 +1,105 @@
+{%extends 'base_main.html'%}
+{%load static%}
+{% block css %}
+<link rel="stylesheet" href="{% static 'datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'sweetalert2/dist/sweetalert2.min.css' %}">
+<link rel="stylesheet" href="{% static 'toastr/build/toastr.min.css' %}">
+{% endblock %}
+
+{% block buscador %}
+    {% include 'snippets/buscador.html' %}
+{% endblock %}
+
+{% block buscador-responsivo %}
+    {% include 'snippets/buscador-responsivo.html' %}
+{% endblock %}
+
+{% block contenido %}
+    <br>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-users mr-1"></i>
+            Clientes
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="data-table" width="100%" cellspacing="0"></table>
+            </div>
+        </div>
+    </div>
+    {% include 'snippets/modal_base.html' %}
+{% endblock %}
+{% block javascript %}
+    <script type="application/javascript" src="{% static 'sweetalert2/dist/sweetalert2.all.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'toastr/build/toastr.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/tableRequest/defaultTableRequest.js' %}"></script>
+    <script type="application/javascript">
+        // Function reload table list user
+        $(document).ready(() => {
+            loadTableUsers($('#data-table'));
+        })
+        // function users
+        function loadTableUsers(table){
+            let $table = table;
+            {% if request.path == '/caja/listado-creditos/' %}
+            const url = "{% url 'caja:jsoncreditoscaja' %}"
+            {%else%}
+            const url = "{% url 'creditos:jsoncredits' %}"
+            {%endif%}
+            const lenguaje_url = "{% static 'js/lenguaje/lenguaje_es.json' %}";
+            const columns = [
+                {
+                    data: '1',
+                    title: 'Nombre de Cliente'
+                },
+                {
+                    data: '2',
+                    title: 'Monto',
+                    filterable: false,
+                    searchable: false,
+                    sortable: false
+                },
+                {
+                    data: '3',
+                    title: 'Plazo',
+                    filterable: false,
+                    searchable: false,
+                    sortable: false
+                },
+                {
+                    data: '0',
+                    title: 'Acciones',
+                    filterable: false,
+                    searchable: false,
+                    sortable: false,
+                    width: '25%',
+                    render: ((data, type, row, meta) => {
+                        const editUrl = "{% url 'creditos:update_credits' 0 %}".replace(0, data);
+                        const deleteUrl = "{% url 'creditos:delete_credits' 0 %}".replace(0, data);
+                        const passwordUrl = "{% url 'creditos:detail_credits' 0 %}".replace(0, data);
+                        const editButton = `<div class='text-center'><a href='${editUrl}' class='btn btn-warning btn-sm' title="Editar"><i class="fas fa-edit"></i></a>`
+                        const deleteButton = `<button type='button' class='btn btn-danger btn-sm' title="Eliminar" onclick="eliminarData(\'${deleteUrl}\')"><i class="fas fa-trash-alt"></i></button>`;
+                        const resumeUrl = "{% url 'creditos:detail_customer' 0 %}".replace(0, row[0]);
+                        const resumeButton = `<a href='${resumeUrl}' class='btn btn-primary btn-sm' title='Resumen'><i class="fas fa-file-signature"></i></a></div>`;
+                        {% if request.path == '/caja/listado-creditos/' %}
+                        const disburseCreditUrl = "{% url 'creditos:disburse_redit' 0 %}".replace(0,data);
+                        const disburseCredit = `<button type='button' class='btn btn-primary btn-sm' title="Desembolsar"><a href='${disburseCreditUrl}' class='btn btn-warning btn-sm' title="Editar"><i class="fas fa-cash-register"></i></button>`;
+                       
+                        //const keybutton = `<button class="btn btn-info btn-sm" title="Cambiar contraseña" onclick="dataFormModal(\'${passwordUrl}\')"><i class="fas fa-key"></i></button></div>`;
+                        return  disburseCredit;
+                        {% else %}
+                        return editButton +' '+resumeButton +' ' +deleteButton;
+                        {% endif %}
+
+                    })
+                }
+            ];
+            $table.DataTable(postDefaultTableRequest(url, lenguaje_url, columns))
+        }
+    </script>
+{% endblock %}

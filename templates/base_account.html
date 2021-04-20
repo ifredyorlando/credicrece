@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta HTTP-EQUIV="x-ua-compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="{% static 'image/avion.png' %}" type="image/png">
+        <title>ISSE {% block titulo %} {% endblock titulo %}</title>
+        <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static '@fortawesome/fontawesome-free/css/all.min.css'%}">
+        <link rel="stylesheet" href="{% static 'font/Linearicons/icon-font.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/account/util.css' %}">
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/account/main.css' %}">
+        {% block css %} {% endblock css %}
+    </head>
+    <body>
+        {% block contenido %} {% endblock contenido %}
+
+        <script type="text/javascript" charset="UTF-8" src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+        <script type="text/javascript" charset="UTF-8" src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+        <script type="text/javascript" charset="UTF-8" src="{% static 'js/account/main.js' %}"></script>
+        {% block javascript %} {% endblock javascript %}
+    </body>
+</html>

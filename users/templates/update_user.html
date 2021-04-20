@@ -1,0 +1,37 @@
+{% extends 'base_main.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block titulo %}Editar usuario{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'select2/dist/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'select2-bootstrap4-theme/dist/select2-bootstrap4.min.css' %}">
+{% endblock %}
+
+{% block contenido %}
+    <br>
+    <form method="post" action="" enctype="multipart/form-data" novalidate autocomplete="off">
+         <div class="card">
+            <div class="card-body">
+                <div class="title-block">
+                    <h4 class="title">Datos del Usuario</h4>
+                    <hr/>
+                </div>
+                {% include "snippets/_form_non_field_errors.html" %}
+                <div class="form-horizontal">
+                    {% crispy form %}
+                </div>
+            </div>
+            <div class="card-footer text-right">
+               {% url 'main:index-users' as cancel_url %}
+               {% include "snippets/_form_default_buttons.html" with cancel_url=cancel_url %}
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascript %}
+    <script type="application/javascript" charset="UTF-8" src="{% static 'select2/dist/js/select2.min.js' %}"></script>
+    <script type="application/javascript" charset="UTF-8" src="{% static 'select2/dist/js/i18n/es.js' %}"></script>
+    <script type="application/javascript">$('select').select2({theme: 'bootstrap4', width: '100%'});</script>
+{% endblock %}

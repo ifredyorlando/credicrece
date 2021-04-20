@@ -1,0 +1,122 @@
+{% extends 'base_main.html'%}
+{% load static %}
+{% block titulo %}Resumen{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'sweetalert2/dist/sweetalert2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'toastr/build/toastr.min.css' %}">
+    <style type="text/css">
+
+        tbody::before
+{
+  content: '';
+  display: block;
+  height: 15px;
+
+}
+    </style>
+{% endblock %}
+
+{% block contenido %}
+    <div class="container" style="border: 1px solid black; padding: 0">
+        <div class="header d" style="background-image: linear-gradient(180deg, #232222 10%, #232222 100%);
+background-size: cover; padding: 10px; color: #fff; background-color: #232222;">
+            Resumen - Credito No. {{ pk }}
+            <span class="float-right d-none" style="cursor: pointer;" id="reporte">Generar Recibo <i class="fas fa-file-pdf" title="recibo"></i></span>
+        </div>
+    <div style="padding: 10px">
+        <table>
+            <tr>
+                <td>
+                    <strong>Descripcion garantia</strong>
+                </td>
+                <td>
+                    {{ descripcion_garantia }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Marca</strong>
+                </td>
+                <td>
+                    {{ marca }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>No. Serie</strong>
+                </td>
+                <td>
+                    {{ numero_serie }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Modelo</strong>
+                </td>
+                <td>
+                    {{ modelo }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Plazo</strong>
+                </td>
+                <td>
+                    {{ plazo }} 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Monto</strong>
+                </td>
+                <td>
+                    Q.{{ monto|floatformat:"2" }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Cuota capital</strong>
+                </td>
+                <td>
+                    Q.{{ cuota_capital|floatformat:"2" }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Cuota interes</strong>
+                </td>
+                <td>
+                    Q.{{ cuota_interes|floatformat:"2" }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>Cuota total</strong>
+                </td>
+                <td>
+                    Q.{{ cuota_total|floatformat:"2" }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>Cuota diaria</strong>
+                </td>
+                <td>
+                    Q.{{ cuota_interes_diaria|floatformat:"2" }}
+                </td>
+            </tr>
+        </table>
+    </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script type="application/javascript" charset="UTF-8" src="{% static 'sweetalert2/dist/sweetalert2.all.min.js' %}"></script>
+    <script type="application/javascript" charset="UTF-8" src="{% static 'toastr/build/toastr.min.js' %}"></script>
+    <script type="application/javascript" charset="UTF-8" src="{% static 'jspdf/dist/jspdf.umd.min.js' %}"></script>
+    <script type="application/javascript" charset="UTF-8" src="{% static 'jspdf-autotable/dist/jspdf.plugin.autotable.min.js' %}"></script>
+    <script type="application/javascript" charset="UTF-8" src="{% static 'js/cookie.js' %}"></script>
+    
+{% endblock %}
